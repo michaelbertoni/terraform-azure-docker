@@ -1,3 +1,5 @@
+[![Docker-build-push](https://github.com/michaelbertoni/terraform-azure-docker/actions/workflows/docker-build-push.yml/badge.svg)](https://github.com/michaelbertoni/terraform-azure-docker/actions/workflows/docker-build-push.yml)
+
 # About
 Docker image for IaC/CD usage, contains Terraform, Python 3, Azure and SQL Server tools, based on Ubuntu.
 
