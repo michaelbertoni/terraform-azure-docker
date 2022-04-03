@@ -61,7 +61,7 @@ ENTRYPOINT [ "/bin/bash" ]
 # https://github.com/opencontainers/image-spec/blob/main/annotations.md
 LABEL org.opencontainers.image.title="terraform-azure"
 LABEL org.opencontainers.image.description="Docker image for CI/CD usage, contains Terraform, Azure and SQL Server tools, based on Ubuntu."
-LABEL org.opencontainers.image.authors ="Michaël Bertoni"
+LABEL org.opencontainers.image.authors="Michaël Bertoni"
 LABEL org.opencontainers.image.url="https://github.com/michaelbertoni/terraform-azure-docker"
 LABEL org.opencontainers.image.source="https://github.com/michaelbertoni/terraform-azure-docker"
 LABEL org.opencontainers.image.version="${IMAGE_VERSION}"
