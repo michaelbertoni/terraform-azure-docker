@@ -60,10 +60,6 @@ jobs:
         uses: docker/metadata-action@v3
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-      
-      - name: set CREATION_DATETIME variable
-        run: |
-          echo "CREATION_DATETIME=$(date --rfc-3339=seconds | sed 's/ /T/')" >> ${GITHUB_ENV}
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
@@ -75,10 +71,6 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          build-args: |
-            IMAGE_VERSION=${{ steps.meta.outputs.version }}
-            IMAGE_CREATION_DATETIME=${{ env.CREATION_DATETIME }}
-            IMAGE_GIT_SHA1=$GITHUB_SHA
 
 
       # Sign the resulting Docker image digest except on PRs.
@@ -89,7 +81,7 @@ jobs:
       - name: Sign the image with GitHub OIDC Token 
         if: ${{ github.event_name != 'pull_request' }}
         env:
-          TAGS: ${{ steps.docker_meta.outputs.tags }}
+          TAGS: ${{ steps.meta.outputs.tags }}
           COSIGN_EXPERIMENTAL: "true"
         # This step uses the identity token to provision an ephemeral certificate
         # against the sigstore community Fulcio instance.

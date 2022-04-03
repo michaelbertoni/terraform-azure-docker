@@ -5,10 +5,6 @@ ARG AZ_CLI_VERSION=2.34.1
 ARG SQL_PACKAGE_VERSION=16.0.5400.1
 ARG MSSQL_TOOLS_VERSION=17.9.1.1-1
 
-ARG IMAGE_VERSION
-ARG IMAGE_CREATION_DATETIME
-ARG IMAGE_GIT_SHA1
-
 # Retrieve terraform binary from official terraform docker image
 FROM hashicorp/terraform:${TERRAFORM_VERSION} as terraform
 
@@ -28,11 +24,6 @@ FROM ubuntu:${UBUNTU_BASE_IMAGE_VERSION} as release
 ARG PYTHON_MAJOR_MINOR_VERSION
 ARG SQL_PACKAGE_VERSION
 ARG MSSQL_TOOLS_VERSION
-
-ARG IMAGE_VERSION
-ARG IMAGE_CREATION_DATETIME
-ARG IMAGE_GIT_SHA1
-
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \
   && apt-get install -y --no-install-recommends python${PYTHON_MAJOR_MINOR_VERSION} python3-distutils curl unzip libunwind8 libicu66 jq git gnupg ca-certificates \
@@ -57,14 +48,3 @@ COPY --from=azure-cli /usr/lib/python3/dist-packages /usr/lib/python3/dist-packa
 
 USER nonroot
 ENTRYPOINT [ "/bin/bash" ]
-
-# https://github.com/opencontainers/image-spec/blob/main/annotations.md
-LABEL org.opencontainers.image.title="terraform-azure"
-LABEL org.opencontainers.image.description="Docker image for CI/CD usage, contains Terraform, Azure and SQL Server tools, based on Ubuntu."
-LABEL org.opencontainers.image.authors="Michaël Bertoni"
-LABEL org.opencontainers.image.url="https://github.com/michaelbertoni/terraform-azure-docker"
-LABEL org.opencontainers.image.source="https://github.com/michaelbertoni/terraform-azure-docker"
-LABEL org.opencontainers.image.version="${IMAGE_VERSION}"
-LABEL org.opencontainers.image.created="${IMAGE_CREATION_DATETIME}"
-LABEL org.opencontainers.image.revision="${IMAGE_GIT_SHA1}"
-LABEL org.opencontainers.image.licenses="MIT"
